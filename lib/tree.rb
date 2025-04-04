@@ -151,4 +151,34 @@ class Tree
   
     values
   end
+
+  def height(node)
+    return -1 if node.nil?
+
+    left_height = height(node.left_child)
+    right_height = height(node.right_child)
+
+    1 + [left_height, right_height].max
+
+  end
+
+  def depth(node)
+    depth_count = 0
+  
+    while node != @root
+      node = parent_of(node)
+      depth_count += 1
+    end
+  
+    depth_count
+  end
+
+  def parent_of(child, node = @root)
+    return nil if node.nil? || node == child
+
+    if node.left_child == child || node.right_child == child
+      node
+    else
+      parent_of(child, node.left_child) || parent_of(child, node.right_child)
+  end
 end
