@@ -32,4 +32,46 @@ class Tree
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
+
+  def insert(value, node = @root)
+    return Node.new(value) if node.nil?
+
+    if value < node.data
+      node.left_child = insert(value, node.left_child)
+    elsif value > node.data
+      node.right_child = insert(value, node.right_child)
+    end
+
+    node
+  end
+
+  def delete(value, node = @root)
+    return node if node.nil?
+  
+    if value < node.data
+      node.left_child = delete(value, node.left_child)
+    elsif value > node.data
+      node.right_child = delete(value, node.right_child)
+    else
+      # Node found: handle cases
+      if node.left_child.nil? && node.right_child.nil? # No children
+        return nil
+      elsif node.left_child.nil? # One child (right)
+        return node.right_child
+      elsif node.right_child.nil? # One child (left)
+        return node.left_child
+      else # Two children
+        successor = find_min(node.right_child)
+        node.data = successor.data
+        node.right_child = delete(successor.data, node.right_child)
+      end
+    end
+  
+    node
+  end
+  
+  def find_min(node)
+    node = node.left_child until node.left_child.nil?
+    node
+  end
 end
