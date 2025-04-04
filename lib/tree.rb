@@ -15,7 +15,7 @@ class Tree
     build_subtree(array)
   end
 
-  def build_subtree
+  def build_subtree(array)
     return nil if array.empty?
 
     # find middle element
@@ -25,12 +25,14 @@ class Tree
     # left and right subtrees
     root.left_child = build_subtree(array[0...mid])
     root.right_child = build_subtree(array[mid + 1..-1])
+
+    return root
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
-    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
-    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+    pretty_print(node.left_child, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left_child
   end
 
   def insert(value, node = @root)
@@ -82,7 +84,7 @@ class Tree
       node
     elsif value < node.data
       find(value, node.left_child)
-    else value > node.data
+    else
       find(value, node.right_child)
     end
   end
@@ -180,6 +182,7 @@ class Tree
       node
     else
       parent_of(child, node.left_child) || parent_of(child, node.right_child)
+    end
   end
 
   def balanced?(node = @root)

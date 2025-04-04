@@ -4,7 +4,7 @@ require_relative './lib/tree.rb'
 random_array = Array.new(15) { rand(1..100) }
 tree = Tree.new(random_array)
 puts "Initial Tree:"
-tree.pretty_print # Visualize the initial tree
+puts tree.pretty_print
 
 # Step 2: Confirm the tree is balanced
 puts "\nIs the tree balanced? #{tree.balanced?}"
@@ -18,7 +18,7 @@ puts "Inorder: #{tree.inorder}"
 # Step 4: Unbalance the tree by adding several numbers > 100
 [101, 102, 103, 104, 105].each { |value| tree.insert(value) }
 puts "\nTree after adding several nodes > 100:"
-tree.pretty_print
+puts tree.pretty_print
 
 # Step 5: Confirm the tree is unbalanced
 puts "\nIs the tree balanced after adding nodes? #{tree.balanced?}"
@@ -26,7 +26,7 @@ puts "\nIs the tree balanced after adding nodes? #{tree.balanced?}"
 # Step 6: Balance the tree
 tree.rebalance
 puts "\nTree after rebalancing:"
-tree.pretty_print
+puts tree.pretty_print
 
 # Step 7: Confirm the tree is balanced again
 puts "\nIs the tree balanced after rebalancing? #{tree.balanced?}"
