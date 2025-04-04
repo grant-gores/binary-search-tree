@@ -74,4 +74,17 @@ class Tree
     node = node.left_child until node.left_child.nil?
     node
   end
+
+  def find(value, node = @root)
+    return nil if node.nil?
+
+    if value == node.data
+      node
+    elsif value < node.data
+      find(value, node.left_child)
+    else value > node.data
+      find(value, node.right_child)
+    end
+  end
+  
 end
