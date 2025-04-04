@@ -86,5 +86,69 @@ class Tree
       find(value, node.right_child)
     end
   end
+
+  def level_order(node = @root, &block)
+    return [] if node.nil?
   
+    queue = [node]
+    values = []
+  
+    while !queue.empty?
+      current = queue.shift
+  
+      if block_given?
+        yield(current)
+      else
+        values << current.data
+      end
+  
+      # Add children to the queue
+      queue << current.left_child if current.left_child
+      queue << current.right_child if current.right_child
+    end
+  
+    values
+  end
+
+  def inorder(node = @root, values = [], &block)
+    return values if node.nil?
+
+    inorder(node.left_child, values, &block)
+    if block_given?
+      yield(node)
+    else
+      values << node.data
+    end
+    inorder(node.right_child, values, &block)
+
+    values
+  end
+
+  def preorder(node = @root, values = [], &block)
+    return values if node.nil?
+  
+    if block_given?
+      yield(node)
+    else
+      values << node.data
+    end
+    preorder(node.left_child, values, &block)
+    preorder(node.right_child, values, &block)
+  
+    values
+  end
+
+  def postorder(node = @root, values = [], &block)
+    return values if node.nil?
+  
+    postorder(node.left_child, values, &block)
+    postorder(node.right_child, values, &block)
+    if block_given?
+      yield(node)
+    else
+      values << node.data
+    end
+  
+    values
+  end
 end
