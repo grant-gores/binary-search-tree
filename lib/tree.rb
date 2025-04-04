@@ -181,4 +181,21 @@ class Tree
     else
       parent_of(child, node.left_child) || parent_of(child, node.right_child)
   end
+
+  def balanced?(node = @root)
+    return true if node.nil?
+
+    left_height = height(node.left_child)
+    right_height = height(node.right_child)
+
+    # check balance for current node and recursively for subtrees
+    (left_height - right_height).abs <= 1 && balanced?(node.left_child) && balanced?(node.right_child)
+  end
+
+  def rebalance
+    sorted_values = inorder
+    @root = build_tree(sorted_values)
+  end
+
+
 end
